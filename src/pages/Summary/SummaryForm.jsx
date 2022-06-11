@@ -26,7 +26,7 @@ const SummaryForm = () => {
                 <Form.Check
                     type="checkbox"
                     checked={tcChecked}
-                    onChange={(event) => setTcChecked(event.target.checked)}
+                    onChange={(e) => setTcChecked(e.target.checked)}
                     label={checkboxLabel}
                 />
             </Form.Group>

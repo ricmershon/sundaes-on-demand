@@ -1,6 +1,10 @@
 import { rest } from 'msw';
 
-import { waitFor, render, screen } from '@testing-library/react';
+import {
+    waitFor,
+    render,
+    screen
+} from '../../../test-utils/testing-library-utils';
 // eslint-disable-next-line jest/no-mocks-import
 import { server } from '../../../__mocks__/server';
 import OrderEntry from '../OrderEntry';
