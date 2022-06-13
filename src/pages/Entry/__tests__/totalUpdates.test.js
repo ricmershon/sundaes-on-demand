@@ -62,14 +62,6 @@ describe('Total', () => {
 
 describe('Grand total', () => {
 
-    test('starts at $0.00', () => {
-        render(<OrderEntry />);
-        const grandTotal = screen.getByRole(
-            'heading', { name: /grand total: \$/i }
-        )
-        expect(grandTotal).toHaveTextContent(0.00)
-    });
-
     test('updates properly if scoop is added first', async () => {
         render(<OrderEntry />);
 
@@ -83,6 +75,9 @@ describe('Grand total', () => {
         const grandTotal = screen.getByRole(
             'heading', { name: /grand total: \$/i }
         );
+
+        //  Expect grand total to start at 0.00
+        expect(grandTotal).toHaveTextContent(0.00);
 
         // Add scoops then topping and check grand total
         userEvent.clear(vanillaInput);
