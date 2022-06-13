@@ -1,4 +1,4 @@
-import { Col, Form, Row } from 'react-bootstrap';
+import { Col, Form } from 'react-bootstrap';
 
 const ToppingOption = ({ name, imagePath, updateItemCount }) => (
     <Col xs={12} sm={6} md={4} lg={3} style={{ textAlign: 'center' }}>
