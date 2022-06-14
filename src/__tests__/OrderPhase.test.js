@@ -38,7 +38,7 @@ describe('Golden path', () => {
             'button', { name: /order sundae/i } 
         );
         userEvent.click(orderSummaryButton);
-        
+
         // Check summary information based on order
         const summaryHeading = screen.getByRole(
             'heading', { name: 'Order Summary' }
@@ -58,8 +58,8 @@ describe('Golden path', () => {
         // Check summary options
         expect(screen.getByText('1 Vanilla')).toBeInTheDocument();
         expect(screen.getByText('2 Chocolate')).toBeInTheDocument();
-        // expect(screen.getByText('Hot fudge')).toBeInTheDocument();
-        // expect(screen.getByText('Peanut butter cups')).toBeInTheDocument();
+        expect(screen.getByText('Hot fudge')).toBeInTheDocument();
+        expect(screen.getByText('Peanut butter cups')).toBeInTheDocument();
 
         // Accept terms and conditions and click button to confirm order
         const tcCheckbox = screen.getByRole(
