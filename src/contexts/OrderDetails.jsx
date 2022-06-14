@@ -58,27 +58,45 @@ export const OrderDetailsProvider = (props) => {
     }, [optionCounts]);
 
     const value = useMemo(() => {
+
+        /**
+         * @function updateItemCount
+         * Updates item count
+         * 
+         * @param {string} itemName 
+         * @param {number} newItemCount 
+         * @param {string} optionType
+         * 
+         * @returns {Array} 
+         *     [{optionCounts, subTotals, total}, updateItemCount, resetOrder]
+         * 
+         */
         const updateItemCount = (itemName, newItemCount, optionType) => {
 
-            // Get option Map and make copy
+            // Update map
             const { [optionType]: optionMap } = optionCounts;
             const newOptionMap = new Map(optionMap);
- 
-            // Update copied Map
             newOptionMap.set(itemName, parseInt(newItemCount));
  
-            // create new object with the old optionCounts plus new map
+            // Create new object with the old optionCounts plus new map
+            // then update state
             const newOptionCounts = {...optionCounts};
             newOptionCounts[optionType] = newOptionMap;
- 
-            // update state
             setOptionCounts(newOptionCounts);
         }
 
-        // Returns:
-        // - getter: object containing option couunts, subtotals and total
-        // - setter: updateItemCount
-        return [{...optionCounts, totals}, updateItemCount];
+        /**
+         * @function resetOrder
+         * Resets item counts for scoops and toppings.
+         */
+        const resetOrder = () => {
+            setOptionCounts({
+                scoops: new Map(),
+                toppings: new Map()
+            });
+        };
+        
+        return [{...optionCounts, totals}, updateItemCount, resetOrder];
     }, [optionCounts, totals]);
 
     return <OrderDetails.Provider value={value} {...props} />

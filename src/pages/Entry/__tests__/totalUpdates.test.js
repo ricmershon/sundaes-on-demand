@@ -69,6 +69,9 @@ describe('Grand total', () => {
         const vanillaInput = await screen.findByRole(
             'spinbutton', { name: 'Vanilla' }
         );
+        const chocolateInput = await screen.findByRole(
+            'spinbutton', { name: 'Chocolate' }
+        );
         const hotFudgeCheckbox = await screen.findByRole(
             'checkbox', { name: 'Hot fudge' }
         );
@@ -82,9 +85,11 @@ describe('Grand total', () => {
         // Add scoops then topping and check grand total
         userEvent.clear(vanillaInput);
         userEvent.type(vanillaInput, '2');
-        expect(grandTotal).toHaveTextContent('4.00');
+        userEvent.clear(chocolateInput);
+        userEvent.type(chocolateInput, '2');
+        expect(grandTotal).toHaveTextContent('8.00');
         userEvent.click(hotFudgeCheckbox);
-        expect(grandTotal).toHaveTextContent('5.50');
+        expect(grandTotal).toHaveTextContent('9.50');
     });
 
     test('updates properly if topping is added first', async () => {
