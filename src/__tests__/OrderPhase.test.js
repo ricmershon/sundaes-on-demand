@@ -16,7 +16,7 @@ describe('Golden path', () => {
         userEvent.clear(vanillaInput);
         userEvent.type(vanillaInput, '1');
 
-        const chocolateInput = await screen.findByRole(
+        const chocolateInput = screen.getByRole(
             'spinbutton', { name: 'Chocolate' }
         );
         userEvent.clear(chocolateInput);
@@ -27,7 +27,7 @@ describe('Golden path', () => {
         );
         userEvent.click(hotFudgeCheckbox);
 
-        const pbCupsCheckbox = await screen.findByRole(
+        const pbCupsCheckbox = screen.getByRole(
             'checkbox', { name: 'Peanut butter cups' }
         );
         userEvent.click(pbCupsCheckbox);
@@ -78,7 +78,7 @@ describe('Golden path', () => {
         );
         expect(thankYouHeader).toBeInTheDocument();
 
-        const orderNumber = await screen.findByText(/order number/i);
+        const orderNumber = screen.getByText(/order number/i);
         expect(orderNumber).toBeInTheDocument();
 
         // Click 'new order' button on confirmation page
