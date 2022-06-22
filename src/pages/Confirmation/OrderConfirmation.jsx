@@ -4,6 +4,7 @@ import { Button } from 'react-bootstrap';
 
 import { useOrderDetails } from '../../contexts/OrderDetails';
 import AlertBanner from '../common/AlertBanner';
+import { ORDER_PHASE } from '../../constants';
 
 const OrderConfirmation = ({ setOrderPhase }) => {
     const [,, resetOrder] = useOrderDetails();
@@ -17,9 +18,13 @@ const OrderConfirmation = ({ setOrderPhase }) => {
             .catch(() => setError(true))
     }, []);
 
+    /**
+     * @function handleClick
+     * Resets order and sets order phase to IN_PROGRESS
+     */
     const handleClick = () => {
         resetOrder();
-        setOrderPhase('inProgress');
+        setOrderPhase(ORDER_PHASE.IN_PROGRESS);
     };
 
     if (error) {

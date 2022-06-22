@@ -9,9 +9,13 @@ import {
 import { pricePerItem } from '../constants';
 import { formatCurrency } from '../utilities';
 
+// OrderDetails context
 const OrderDetails = createContext();
 
-// Custom hook to check if inside a provider
+/**
+ * @function useOrderDetails
+ * @returns OrderDetails context hook
+ */
 export const useOrderDetails = () => {
     const context = useContext(OrderDetails);
     if (!context) {
@@ -19,19 +23,31 @@ export const useOrderDetails = () => {
             'useOrderDetails must be used within an OrderDetailsProvider.'
         );
     };
-
     return context;
 };
 
+/**
+ * @function calculateSubtotal
+ * Returns sub total of cost of optionCounts for optionType
+ * 
+ * @param {string} optionType - 'scoops' or 'toppings'
+ * @param {*} optionCounts - Map of item values within optionType
+ * @returns {float} sub total of cost of optionCounts for optionType
+ */
 const calculateSubtotal = (optionType, optionCounts) => {
     let optionCount = 0;
     for (const count of optionCounts[optionType].values()) {
         optionCount += count;
     }
-
     return optionCount * pricePerItem[optionType]
 };
 
+/**
+ * @function OrderDetailsProvider
+ * 
+ * @param {*} props 
+ * @returns OrderDetails.Provider - context provider component
+ */
 export const OrderDetailsProvider = (props) => {
     const [optionCounts, setOptionCounts] = useState({
         scoops: new Map(),
@@ -57,19 +73,23 @@ export const OrderDetailsProvider = (props) => {
         });
     }, [optionCounts]);
 
+    /**
+     * @returns {Array} value - array of data and functions memoized in
+     * context:
+     *      {Object} optionCounts, subTotal and total
+     *      {updateItemCount(itemName, newItemCount, optionType) => void}
+     *          - function to update item counts
+     *      {resetOrder() => void} - function to reset order
+     */
     const value = useMemo(() => {
 
         /**
          * @function updateItemCount
          * Updates item count
          * 
-         * @param {string} itemName 
-         * @param {number} newItemCount 
-         * @param {string} optionType
-         * 
-         * @returns {Array} 
-         *     [{optionCounts, subTotals, total}, updateItemCount, resetOrder]
-         * 
+         * @param {string} itemName - scoop or topping item name
+         * @param {number} newItemCount - new item count
+         * @param {string} optionType - 'scoops' or 'toppings'
          */
         const updateItemCount = (itemName, newItemCount, optionType) => {
 

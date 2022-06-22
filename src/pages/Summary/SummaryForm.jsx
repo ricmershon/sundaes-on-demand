@@ -1,6 +1,8 @@
 import { useState } from 'react';
 import { Form, Button, Popover, OverlayTrigger } from 'react-bootstrap';
 
+import { ORDER_PHASE } from '../../constants';
+
 const SummaryForm = ({ setOrderPhase }) => {
     const [tcChecked, setTcChecked] = useState(false);
 
@@ -22,7 +24,7 @@ const SummaryForm = ({ setOrderPhase }) => {
 
     const handleSubmit = (event) => {
         event.preventDefault();
-        setOrderPhase('completed');
+        setOrderPhase(ORDER_PHASE.COMPLETED);
     }
 
     return (
