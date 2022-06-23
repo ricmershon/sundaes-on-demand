@@ -31,7 +31,7 @@ export const useOrderDetails = () => {
  * Returns sub total of cost of optionCounts for optionType
  * 
  * @param {string} optionType - 'scoops' or 'toppings'
- * @param {*} optionCounts - Map of item values within optionType
+ * @param {Map} optionCounts - Map of item values within optionType
  * @returns {float} sub total of cost of optionCounts for optionType
  */
 const calculateSubtotal = (optionType, optionCounts) => {

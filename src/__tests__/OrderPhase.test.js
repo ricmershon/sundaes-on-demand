@@ -4,9 +4,9 @@ import userEvent from '@testing-library/user-event';
 
 import App from '../App';
 
-describe('Golden path', () => {
+describe('Happy path', () => {
 
-    test('order phases', async () => {
+    test('executes order phases correctly', async () => {
         render(<App />);
 
         // Add scoops and toppings
@@ -33,11 +33,10 @@ describe('Golden path', () => {
         userEvent.click(pbCupsCheckbox);
 
         // Find and click order button
-
-        const orderSummaryButton = screen.getByRole(
+        const orderButton = screen.getByRole(
             'button', { name: /order sundae/i } 
         );
-        userEvent.click(orderSummaryButton);
+        userEvent.click(orderButton);
 
         // Check summary information based on order
         const summaryHeading = screen.getByRole(
@@ -72,11 +71,19 @@ describe('Golden path', () => {
         );
         userEvent.click(confirmOrderButton);
 
+        // Confirm 'Loading' is not on the screen
+        let loadingMessage = screen.getByText(/loading/i);
+        expect(loadingMessage).toBeInTheDocument();
+
         // Confirm order number on confirmation page
         const thankYouHeader = await screen.findByRole(
             'heading', { name: /thank you/i }
         );
         expect(thankYouHeader).toBeInTheDocument();
+
+        // Confirm loading message gone
+        loadingMessage = screen.queryByText(/loading/i);
+        expect(loadingMessage).not.toBeInTheDocument();
 
         const orderNumber = screen.getByText(/order number/i);
         expect(orderNumber).toBeInTheDocument();
@@ -96,5 +103,40 @@ describe('Golden path', () => {
         // Wait for items to appear after async call so exit without errors
         await screen.findByRole('spinbutton', { name: 'Vanilla' });
         await screen.findByRole('checkbox', { name: 'Hot fudge' });
+    });
+
+    test('displays no toppings header on summary page if no toppings ordered', async () => {
+        render(<App />);
+
+        // Add scoops only
+        const vanillaInput = await screen.findByRole(
+            'spinbutton', { name: /vanilla/i }
+        );
+        userEvent.clear(vanillaInput);
+        userEvent.type(vanillaInput, '1');
+
+        const chocolateInput = screen.getByRole(
+            'spinbutton', { name: /chocolate/i }
+        );
+        userEvent.clear(chocolateInput);
+        userEvent.type(chocolateInput, '2');
+
+        // Find and click order  button
+        const orderButton = screen.getByRole(
+            'button', { name: /order sundae/i }
+        );
+        userEvent.click(orderButton);
+
+        // Check summary header and information for scoops
+        const scoopsHeading = screen.getByRole(
+            'heading', { name: 'Scoops: $6.00' }
+        );
+        expect(scoopsHeading).toBeInTheDocument();
+
+        // Check toppings information not present
+        const toppingsHeading = screen.queryByRole(
+            'heading', { name: /toppings:/i }
+        );
+        expect(toppingsHeading).not.toBeInTheDocument();
     });
 });
