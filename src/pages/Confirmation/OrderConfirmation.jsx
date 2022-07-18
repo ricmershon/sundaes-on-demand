@@ -28,7 +28,7 @@ const OrderConfirmation = ({ setOrderPhase }) => {
     };
 
     if (error) {
-        return <AlertBanner />
+        return <AlertBanner message={null} variant={null} />
     };
 
     if (orderNumber) {

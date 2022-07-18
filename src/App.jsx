@@ -8,7 +8,7 @@ import { OrderDetailsProvider } from './contexts/OrderDetails';
 import { ORDER_PHASE } from './constants';
 
 const App = () => {
-    const [orderPhase, setOrderPhase] = useState('IN_PROGRESS');
+    const [orderPhase, setOrderPhase] = useState(ORDER_PHASE.IN_PROGRESS);
     let PhaseComponent;
 
     switch (orderPhase) {
