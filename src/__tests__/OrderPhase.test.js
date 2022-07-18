@@ -4,7 +4,7 @@ import userEvent from '@testing-library/user-event';
 
 import App from '../App';
 
-describe('Happy path', () => {
+describe('Golden path', () => {
 
     test('executes order phases correctly', async () => {
         render(<App />);
@@ -71,7 +71,7 @@ describe('Happy path', () => {
         );
         userEvent.click(confirmOrderButton);
 
-        // Confirm 'Loading' is not on the screen
+        // Confirm 'Loading' is on the screen
         let loadingMessage = screen.getByText(/loading/i);
         expect(loadingMessage).toBeInTheDocument();
 

@@ -1,11 +1,11 @@
 import userEvent from '@testing-library/user-event';
 import { rest } from 'msw';
-
 import {
     waitFor,
     render,
     screen
 } from '../../../test-utils/testing-library-utils';
+
 // eslint-disable-next-line jest/no-mocks-import
 import { server } from '../../../__mocks__/server';
 import OrderEntry from '../OrderEntry';
@@ -51,7 +51,6 @@ describe('OrderEntry component', () => {
         userEvent.clear(vanillaInput);
         userEvent.type(vanillaInput, '0');
         expect(orderButton).toBeDisabled();
-
     });
 
 });

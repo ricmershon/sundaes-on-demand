@@ -1,3 +1,4 @@
+import userEvent from '@testing-library/user-event';
 import { render, screen } from '../../../test-utils/testing-library-utils';
 import Options from '../Options';
 
@@ -35,4 +36,20 @@ describe('Options component', () => {
             'Peanut butter cups topping'
         ]);
     })
+
+    test('Does not update total if scoops input is invalid', async () => {
+        render(<Options optionType='scoops' />);
+
+        const vanillaInput = await screen.findByRole(
+            'spinbutton',
+            { name: /vanilla/i }
+        );
+        
+        userEvent.clear(vanillaInput);
+        userEvent.type(vanillaInput, '-1');
+
+        // Confirm scoops subtotal didn't update
+        const scoopsTotal = screen.getByText('Scoops total: $0.00');
+        expect(scoopsTotal).toBeInTheDocument();
+    });
 })
